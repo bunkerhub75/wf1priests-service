@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Service menu of the Wake Forest 1st Ward Priests Quorum. Browse service options and request help.">
+<style>html,body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>The Priests' Table</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;1,6..96,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@400;500&display=swap">
+<style>
+/* Layout: a leather-bound tasting menu. One centered "menu card" with an inset gold rule; courses run top to bottom, dishes in two columns with crew size where the price would be. */
+:root{
+  --navy:#0e1a2b;        /* the leather */
+  --navy-2:#13233a;      /* raised panels */
+  --navy-3:#1b2f4b;      /* hover / inputs */
+  --gold:#c9a35c;        /* foil */
+  --gold-dim:#7e6a45;    /* hairlines */
+  --ivory:#f1eadb;       /* ink on leather */
+  --muted:#a3adbd;       /* secondary text, biased toward navy */
+  --paper:#f6f1e6;       /* the guest check */
+  --paper-ink:#1d2a3d;
+  --paper-rule:#c9d3e0;
+  --check-red:#a5402f;
+  --display:"Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --body:"EB Garamond", "Garamond", "Iowan Old Style", Georgia, serif;
+  --label:"Jost", "Futura", "Avenir Next", "Segoe UI", sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{background:var(--navy);color:var(--ivory);font-family:var(--body);font-size:18px;line-height:1.5;padding-inline:16px;padding-block:0 96px;
+  background-image:radial-gradient(ellipse at 50% -10%, rgba(201,163,92,.10), transparent 55%);}
+a{color:var(--gold)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+.wrap{max-width:1040px;margin:0 auto}
+.label{font-family:var(--label);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0}
+
+/* Cover */
+.cover{margin-top:28px;border:1px solid var(--gold-dim);padding:6px}
+.cover-inner{border:1px solid var(--gold-dim);padding:56px 24px 48px;text-align:center;display:grid;gap:18px;justify-items:center}
+.cover h1{font-size:clamp(44px,9vw,92px);line-height:1;letter-spacing:-.01em;color:var(--ivory)}
+.cover h1 em{font-style:italic;color:var(--gold)}
+.tagline{font-style:italic;font-size:22px;color:var(--muted);margin:0}
+.ornament{display:flex;align-items:center;gap:14px;width:min(320px,80%);color:var(--gold)}
+.ornament::before,.ornament::after{content:"";flex:1;height:1px;background:var(--gold-dim)}
+.ornament span{width:7px;height:7px;transform:rotate(45deg);border:1px solid var(--gold)}
+.scripture{max-width:560px;font-size:19px;margin:0;color:var(--ivory)}
+.scripture cite{display:block;font-style:normal;margin-top:6px}
+.theme-note{font-family:var(--label);font-size:13px;color:var(--muted);letter-spacing:.04em}
+.theme-note b{color:var(--gold);font-weight:500}
+
+/* How to order */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gold-dim);border:1px solid var(--gold-dim);margin-top:28px}
+.step{background:var(--navy);padding:22px 22px 20px;display:grid;gap:6px;align-content:start}
+.step .n{font-family:var(--display);font-size:30px;color:var(--gold);line-height:1}
+.step h3{font-size:21px}
+.step p{margin:0;color:var(--muted);font-size:16px}
+
+/* Year calendar */
+section{margin-top:64px}
+.sec-head{display:grid;gap:8px;justify-items:center;text-align:center;margin-bottom:24px}
+.sec-head h2{font-size:clamp(30px,5vw,44px)}
+.sec-head p{margin:0;color:var(--muted);max-width:60ch;font-style:italic}
+.months{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.month{all:unset;cursor:pointer;border:1px solid var(--gold-dim);padding:12px 12px 14px;display:grid;gap:4px;align-content:start;min-width:0;transition:background .15s,border-color .15s}
+.month:hover{background:var(--navy-2)}
+.month:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.month .m{font-family:var(--label);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);display:flex;justify-content:space-between;gap:6px}
+.month .m i{font-style:normal;color:var(--muted);letter-spacing:.06em}
+.month .picks{font-size:15px;line-height:1.3;color:var(--ivory)}
+.month.now{border-color:var(--gold)}
+.month.now .m i{color:var(--gold)}
+.month[aria-pressed="true"]{background:var(--gold);border-color:var(--gold)}
+.month[aria-pressed="true"] .m,.month[aria-pressed="true"] .m i,.month[aria-pressed="true"] .picks{color:var(--navy)}
+.dark-note{font-family:var(--label);font-size:13px;color:var(--muted);text-align:center;margin-top:14px;letter-spacing:.02em}
+
+/* Filters */
+.filters{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:rgba(14,26,43,.94);backdrop-filter:blur(6px);border-block:1px solid var(--gold-dim);padding:12px 0;margin-top:56px;display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;justify-content:center}
+.fgroup{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.fgroup > .label{margin-right:4px;font-size:11px}
+.chip{all:unset;cursor:pointer;font-family:var(--label);font-size:13px;letter-spacing:.04em;padding:5px 11px;border:1px solid var(--gold-dim);color:var(--ivory);border-radius:999px;transition:background .15s}
+.chip:hover{background:var(--navy-3)}
+.chip:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.chip[aria-pressed="true"]{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.course-nav{display:flex;gap:4px 14px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+.course-nav a{font-family:var(--label);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none}
+.course-nav a:hover{color:var(--gold)}
+.result-note{text-align:center;font-family:var(--label);font-size:13px;color:var(--muted);margin-top:10px;min-height:1.4em}
+
+/* Legend */
+.legend{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px}
+.legend div{display:grid;gap:4px;font-size:15px;color:var(--muted);min-width:0}
+.tag{font-family:var(--label);font-size:11px;letter-spacing:.12em;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;color:var(--ivory)}
+.tag::before{content:"";width:7px;height:7px;flex:none;transform:rotate(45deg)}
+.tag.hand::before{border:1px solid var(--gold)}
+.tag.yours::before{background:var(--muted)}
+.tag.adult::before{background:var(--gold)}
+.tag.ok::before{border:1px solid var(--ivory);border-radius:50%;transform:none}
+
+/* Courses */
+.course{margin-top:72px;scroll-margin-top:120px}
+.course-head{display:grid;justify-items:center;text-align:center;gap:6px;margin-bottom:28px}
+.course-head .num{font-family:var(--display);font-style:italic;color:var(--gold);font-size:22px}
+.course-head h2{font-size:clamp(32px,5.4vw,48px)}
+.course-head .sub{font-family:var(--label);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.course-head p{margin:6px 0 0;font-style:italic;color:var(--muted);max-width:56ch}
+.dishes{display:grid;grid-template-columns:1fr 1fr;gap:34px 56px}
+.dish{display:grid;gap:6px;align-content:start;min-width:0}
+.dish[hidden]{display:none}
+.dish-top{display:flex;align-items:baseline;gap:10px}
+.dish h3{font-family:var(--body);font-weight:500;font-size:22px;line-height:1.2;flex:0 1 auto;min-width:0}
+.dish h3 .side{font-family:var(--label);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-dim);padding:1px 5px;margin-left:8px;vertical-align:3px;white-space:nowrap}
+.leader{flex:1 1 24px;border-bottom:1px dotted var(--gold-dim);transform:translateY(-5px);min-width:16px}
+.crew{font-family:var(--display);font-size:17px;color:var(--gold);white-space:nowrap;font-variant-numeric:lining-nums tabular-nums}
+.dish p{margin:0;font-size:17px;color:var(--ivory);opacity:.92}
+.dish .meta{font-family:var(--label);font-size:12.5px;color:var(--muted);letter-spacing:.03em}
+.dish .note{font-style:italic;font-size:15.5px;color:var(--muted)}
+.dish-foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:4px}
+.add{all:unset;cursor:pointer;font-family:var(--label);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--gold-dim);padding-bottom:1px;margin-left:auto;white-space:nowrap}
+.add:hover{border-color:var(--gold)}
+.add:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.add[aria-pressed="true"]{color:var(--navy);background:var(--gold);border-color:var(--gold);padding:3px 8px}
+.empty-course{grid-column:1/-1;text-align:center;font-style:italic;color:var(--muted)}
+
+/* House rules */
+.rules{border:1px solid var(--gold-dim);padding:6px}
+.rules-inner{border:1px solid var(--gold-dim);padding:32px clamp(18px,4vw,44px);display:grid;grid-template-columns:1fr 1fr;gap:22px 44px}
+.rule{display:grid;gap:4px;min-width:0}
+.rule h3{font-family:var(--body);font-weight:500;font-size:20px}
+.rule p{margin:0;color:var(--muted);font-size:16.5px}
+.rule .src{font-family:var(--label);font-size:11.5px;letter-spacing:.06em;color:var(--gold)}
+
+/* Guest check */
+.check{background:var(--paper);color:var(--paper-ink);max-width:680px;margin:0 auto;padding:28px clamp(18px,4vw,36px) 30px;box-shadow:0 18px 40px rgba(0,0,0,.35);position:relative;
+  background-image:repeating-linear-gradient(to bottom, transparent 0 33px, var(--paper-rule) 33px 34px);background-position:0 120px;background-repeat:no-repeat;background-size:100% calc(100% - 200px)}
+.check::after{content:"";position:absolute;left:0;right:0;bottom:-10px;height:10px;background:radial-gradient(circle at 8px 0, transparent 7px, var(--paper) 7.5px) 0 0/16px 10px repeat-x}
+.check-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;border-bottom:2px solid var(--paper-ink);padding-bottom:10px;flex-wrap:wrap}
+.check-head h3{font-family:var(--display);font-size:28px;color:var(--paper-ink)}
+.check-no{font-family:var(--label);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--check-red)}
+.check-items{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:0}
+.check-items li{display:flex;gap:10px;align-items:baseline;padding:6px 0;border-bottom:1px solid var(--paper-rule);font-size:18px}
+.check-items li .q{font-family:var(--label);font-size:12px;color:#5b6a80;white-space:nowrap;margin-left:auto}
+.check-items li button{all:unset;cursor:pointer;font-family:var(--label);font-size:12px;color:var(--check-red);padding:0 2px}
+.check-items li button:focus-visible{outline:2px solid var(--check-red)}
+.check-empty{font-style:italic;color:#5b6a80;padding:10px 0;border-bottom:1px solid var(--paper-rule)}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;margin-top:20px}
+.field{display:grid;gap:4px;min-width:0}
+.field.full{grid-column:1/-1}
+.field label,.field legend{font-family:var(--label);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#4a5870}
+.field input,.field textarea,.field select{font:inherit;font-size:17px;color:var(--paper-ink);background:rgba(255,255,255,.65);border:1px solid #b9c4d3;border-radius:2px;padding:8px 10px;width:100%;color-scheme:light}
+.field textarea{min-height:84px;resize:vertical}
+.field input:focus,.field textarea:focus{outline:2px solid var(--paper-ink);outline-offset:0}
+fieldset.field{border:0;padding:0;margin:0}
+.dates{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.dates label{font-family:var(--label);font-size:13px;letter-spacing:.02em;text-transform:none;color:var(--paper-ink);border:1px solid #b9c4d3;background:rgba(255,255,255,.6);padding:5px 10px;border-radius:999px;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.dates input{accent-color:var(--paper-ink);margin:0}
+.radio-row{display:flex;gap:16px;flex-wrap:wrap;font-size:17px}
+.radio-row label{font-family:var(--body);font-size:17px;letter-spacing:0;text-transform:none;color:var(--paper-ink);display:inline-flex;gap:6px;align-items:center}
+.check-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:22px}
+.btn{all:unset;cursor:pointer;font-family:var(--label);font-size:13px;letter-spacing:.14em;text-transform:uppercase;padding:11px 18px;background:var(--paper-ink);color:var(--paper);text-align:center}
+.btn:hover{background:#2c3f5c}
+.btn:focus-visible{outline:2px solid var(--check-red);outline-offset:2px}
+.btn.ghost{background:transparent;color:var(--paper-ink);border:1px solid var(--paper-ink)}
+.status{font-family:var(--label);font-size:13px;color:#2f6b45}
+.status.err{color:var(--check-red)}
+.ticket-out{margin-top:16px;display:grid;gap:6px}
+.ticket-out textarea{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:13.5px;line-height:1.45;min-height:220px;background:#fff;border:1px dashed #8d9ab0;padding:12px;color:var(--paper-ink);width:100%;resize:vertical;color-scheme:light}
+.send-box{background:var(--paper-ink);color:var(--paper);padding:18px 20px;display:grid;gap:12px;justify-items:start}
+.send-lead{margin:0;font-size:17px}
+.btn.send{background:var(--gold);color:var(--navy);font-weight:500;font-size:14px;padding:13px 22px;text-decoration:none}
+.btn.send:hover{background:#d9b670}
+.alt{margin-top:12px}
+.alt summary{cursor:pointer;font-family:var(--label);font-size:13px;letter-spacing:.04em;color:#4a5870;padding:6px 0}
+.alt[open] summary{margin-bottom:8px}
+.send-to{margin-top:18px;border-top:2px solid var(--paper-ink);padding-top:14px;display:grid;gap:6px;font-size:17px}
+.send-to b{font-weight:500}
+.contact-line{font-family:var(--label);font-size:15px;user-select:all}
+.thanks{text-align:center;font-style:italic;color:#4a5870;margin:18px 0 0;font-size:16px}
+
+/* Tray */
+.tray{position:fixed;left:0;right:0;bottom:0;z-index:10;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:var(--gold);color:var(--navy);display:flex;justify-content:center;align-items:center;gap:16px;font-family:var(--label);font-size:14px;letter-spacing:.06em;transform:translateY(110%);transition:transform .25s ease}
+.tray:not(.on){visibility:hidden}
+.tray.on{transform:none}
+.tray a{color:var(--navy);font-weight:500;text-transform:uppercase;letter-spacing:.14em;font-size:12.5px;border:1px solid var(--navy);padding:6px 12px;text-decoration:none}
+
+footer{margin-top:72px;text-align:center;display:grid;gap:8px;justify-items:center;color:var(--muted);font-size:15px}
+footer .label{font-size:11px}
+
+@media (max-width:820px){
+  .months{grid-template-columns:repeat(3,1fr)}
+  .legend{grid-template-columns:1fr 1fr}
+}
+@media (max-width:680px){
+  body{font-size:17px}
+  .steps{grid-template-columns:1fr}
+  .dishes{grid-template-columns:1fr;gap:30px}
+  .rules-inner{grid-template-columns:1fr}
+  .fields{grid-template-columns:1fr}
+  .cover-inner{padding:40px 14px 36px}
+  .filters{justify-content:flex-start}
+}
+@media (max-width:440px){
+  .months{grid-template-columns:repeat(2,1fr)}
+  .legend{grid-template-columns:1fr}
+  .dish-top{flex-wrap:wrap}
+  .leader{display:none}
+  .crew{width:100%}
+}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="cover">
+    <div class="cover-inner">
+      <span class="label">Wake Forest 1st Ward · Priests Quorum</span>
+      <h1>The Priests' <em>Table</em></h1>
+      <p class="tagline">Service, served with a smile. No reservations required, just a little notice.</p>
+      <div class="ornament" aria-hidden="true"><span></span></div>
+      <blockquote class="scripture">“When ye are in the service of your fellow beings ye are only in the service of your God.”<cite class="label">Mosiah 2:17</cite></blockquote>
+      <div class="theme-note">2026 Youth Theme: <b>“Walk with Me”</b> · Moses 6:34</div>
+    </div>
+  </header>
+
+  <div class="steps" aria-label="How to order">
+    <div class="step"><span class="n">1</span><h3>Browse the menu</h3><p>Every dish lists the crew it needs where the price would be. Tap <b>Add to ticket</b> on anything that would help.</p></div>
+    <div class="step"><span class="n">2</span><h3>Fill out your ticket</h3><p>Tell us where, when and what you have on hand. Two weeks' notice helps us plan.</p></div>
+    <div class="step"><span class="n">3</span><h3>Send it in</h3><p>One tap opens our request form, already filled in. Press Submit (no account or sign-in needed) and an adviser will reach out to set the night.</p></div>
+  </div>
+
+  <section id="year" aria-labelledby="year-h">
+    <div class="sec-head">
+      <span class="label">The Year's Menu</span>
+      <h2 id="year-h">What's in season in Wake Forest</h2>
+      <p>Pick a month to see what fits it best. Weeknight activities are Tuesdays through 2026 and Wednesdays beginning in 2027, with Saturdays by request.</p>
+    </div>
+    <div class="months" id="months"></div>
+    <p class="dark-note">Sunset comes before 7 p.m. from about October through March, so outdoor work in those months moves to Saturdays or stays close to the porch light.</p>
+  </section>
+
+  <nav class="filters" aria-label="Filter the menu">
+    <div class="fgroup" role="group" aria-label="Crew size">
+      <span class="label">Crew tonight</span>
+      <button class="chip" data-crew="0" aria-pressed="true">Any</button>
+      <button class="chip" data-crew="3">2–4</button>
+      <button class="chip" data-crew="6">5–8</button>
+      <button class="chip" data-crew="9">9+</button>
+    </div>
+    <div class="fgroup" role="group" aria-label="Season">
+      <span class="label">Season</span>
+      <button class="chip" data-season="all" aria-pressed="true">All year</button>
+      <button class="chip" data-season="now" id="now-chip">In season now</button>
+    </div>
+    <div class="fgroup" role="group" aria-label="Equipment">
+      <span class="label">Equipment</span>
+      <button class="chip" data-equip="any" aria-pressed="true">Any</button>
+      <button class="chip" data-equip="noadult">No adult equipment</button>
+    </div>
+  </nav>
+  <div class="course-nav" id="course-nav"></div>
+  <div class="result-note" id="result-note" aria-live="polite"></div>
+
+  <div class="legend" id="legend" aria-label="Equipment key"></div>
+
+  <main id="menu"></main>
+
+  <section id="rules" aria-labelledby="rules-h">
+    <div class="sec-head">
+      <span class="label">House Rules</span>
+      <h2 id="rules-h">How every dish is prepared</h2>
+      <p>We follow the safety and safeguarding guidelines of The Church of Jesus Christ of Latter-day Saints, and a few kitchen rules of our own.</p>
+    </div>
+    <div class="rules"><div class="rules-inner">
+      <div class="rule"><h3>Two adults, every time</h3><p>At least two adult leaders are present at every service activity. Priests serve in pairs or more and never one-on-one with an adult or child.</p><span class="src">General Handbook 20.7.1</span></div>
+      <div class="rule"><h3>Someone's home</h3><p>For service inside a home, a member of the household stays home while we work. Childcare happens at the meetinghouse or with a parent present.</p><span class="src">Children and Youth Protection training</span></div>
+      <div class="rule"><h3>Adults run the big equipment</h3><p>Ladders above a step stool, pressure washers, leaf blowers and power tools are run by an adviser. No roof work and no chainsaws for priests.</p><span class="src">Quorum standard · General Handbook 20.7.6</span></div>
+      <div class="rule"><h3>Safe rides</h3><p>Only licensed adult drivers, in safe vehicles, with a seat belt for everyone. The bishop approves any travel.</p><span class="src">General Handbook 20.7.7</span></div>
+      <div class="rule"><h3>Parents in the loop</h3><p>Parents know where their sons are serving. Anything with higher-than-ordinary risk needs a signed Permission and Medical Release form.</p><span class="src">General Handbook 20.7.4</span></div>
+      <div class="rule"><h3>The sacrament, by authorization</h3><p>Priests take the sacrament to homebound members only when the bishop authorizes it. Requests for it go to the bishop.</p><span class="src">General Handbook 18.9.1</span></div>
+      <div class="rule"><h3>Weeknights &amp; Saturdays</h3><p>Service activities aren't scheduled on Sunday, apart from the sacrament for the homebound when the bishop assigns it.</p><span class="src">General Handbook 20.5.8</span></div>
+      <div class="rule"><h3>No tips, please</h3><p>Our service is free. A thank-you note is plenty, though no priest has ever turned down a cookie.</p><span class="src">House policy</span></div>
+    </div></div>
+  </section>
+
+  <section id="order" aria-labelledby="order-h">
+    <div class="sec-head">
+      <span class="label">Place an Order</span>
+      <h2 id="order-h">Your guest check</h2>
+      <p>Fill it in and we'll prepare your request form. Nothing is sent until you press Submit on the form.</p>
+    </div>
+    <form class="check" id="check" novalidate>
+      <div class="check-head">
+        <h3>The Priests' Table</h3>
+        <span class="check-no" id="check-no">Guest Check</span>
+      </div>
+      <ul class="check-items" id="check-items"></ul>
+      <div class="fields">
+        <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="f-contact">Phone or email</label><input id="f-contact" name="contact" autocomplete="tel"></div>
+        <div class="field full"><label for="f-addr">Address or neighborhood</label><input id="f-addr" name="addr" autocomplete="street-address"></div>
+        <fieldset class="field full"><legend>Nights that work for you</legend><div class="dates" id="dates"></div></fieldset>
+        <div class="field full"><label for="f-details">Tell us about the job</label><textarea id="f-details" name="details" placeholder="e.g. About 20 bags of leaves in the backyard. Gate code is on the fence. Our dog is friendly."></textarea></div>
+        <div class="field"><label for="f-supplies">Supplies you have on hand</label><input id="f-supplies" name="supplies" placeholder="Hose, wheelbarrow, lights…"></div>
+        <fieldset class="field"><legend>Will an adult be home?</legend><div class="radio-row"><label><input type="radio" name="home" id="f-home-y" value="Yes" checked> Yes</label><label><input type="radio" name="home" id="f-home-n" value="Not sure"> Not sure</label><label><input type="radio" name="home" id="f-home-na" value="Not at a home"> Not at a home</label></div></fieldset>
+      </div>
+      <div class="check-actions">
+        <button class="btn" type="submit">Prepare my ticket</button>
+        <button class="btn ghost" type="button" id="clear">Start over</button>
+        <span class="status" id="status" role="status"></span>
+      </div>
+      <div class="ticket-out" id="ticket-out" hidden>
+        <div class="send-box" id="send-box">
+          <p class="send-lead"><b>Last step:</b> open the request form. Your dishes, nights and details are already filled in. Just check them and press <b>Submit</b>.</p>
+          <a class="btn send" id="form-link" href="#" target="_blank" rel="noopener">Open my request form →</a>
+        </div>
+        <details class="alt" id="alt">
+          <summary>Prefer to text or email it instead?</summary>
+          <label class="label" for="ticket" style="color:#4a5870">Your ticket</label>
+          <textarea id="ticket" readonly></textarea>
+          <div class="check-actions" style="margin-top:6px"><button class="btn ghost" type="button" id="copy">Copy ticket</button><span class="status" id="copy-status" role="status"></span></div>
+        </details>
+      </div>
+      <div class="send-to" id="send-to"></div>
+      <p class="thanks">Thank you for letting us serve. — The Priests</p>
+    </form>
+  </section>
+
+  <footer>
+    <div class="ornament" aria-hidden="true"><span></span></div>
+    <span class="label">Prepared by the Priests Quorum</span>
+    <div>Wake Forest 1st Ward · Wake Forest North Carolina Stake</div>
+    <div style="font-style:italic">“Walk with me.” — Moses 6:34</div>
+  </footer>
+</div>
+
+<div class="tray" id="tray" aria-live="polite"><span id="tray-text"></span><a href="#order">Review ticket</a></div>
+
+<script>
+// The Priests' Table — menu data (shared by the live page and the printable menu)
+// equip tags: hand = quorum brings hand tools · yours = homeowner supplies materials
+//             adult = an adviser runs the ladder / power equipment · ok = needs bishopric or leader coordination
+// months: 1–12 (best season in Wake Forest, NC). side: true = short "side dish" (≤45 min) that pairs with another item.
+const COURSES = [
+  { id: "garden", num: "I", name: "From the Garden", sub: "Yard & outdoor work", blurb: "Fresh-picked from Wake Forest yards. Weeknight outdoor jobs are served April through September, while there's still daylight after 7 p.m.; the rest of the year they move to Saturdays." },
+  { id: "heavy", num: "II", name: "The Heavy Course", sub: "Moving & heavy lifting", blurb: "Hearty portions for big days. Bring the boxes; we'll bring the backs." },
+  { id: "hearth", num: "III", name: "Hearth & Home", sub: "House cleaning & household help", blurb: "Served indoors, year-round, with a member of the household or an adult leader present." },
+  { id: "seasonal", num: "IV", name: "Seasonal Specials", sub: "Holiday decorations, up, down & back to storage", blurb: "From the attic to the porch and back again. Ask about our return-trip service." },
+  { id: "nursery", num: "V", name: "The Little Ones' Table", sub: "Childcare", blurb: "Prepared with care, under the watch of at least two adults, and usually served at the meetinghouse." },
+  { id: "talents", num: "VI", name: "Tech & Talents", sub: "Skills, tech help & family history", blurb: "A quorum of digital natives at your service." },
+  { id: "ministering", num: "VII", name: "The Ministering Course", sub: "Visits, connection & the sacrament", blurb: "The heart of the menu. Small portions, lasting flavor." },
+  { id: "ward", num: "VIII", name: "The Community Table", sub: "Ward & community service", blurb: "Served family-style to the whole ward and our Wake Forest neighbors." }
+];
+
+const ALL = [1,2,3,4,5,6,7,8,9,10,11,12];
+
+const ITEMS = [
+  // I. From the Garden
+  { id: "leaf", c: "garden", name: "The Leaf Encore", desc: "A whole yard of oak and maple leaves raked, tarped and hauled to the curb, bagged or piled the way town pickup wants them.", min: 3, max: 10, time: "75–90 min", equip: ["hand"], months: [11,12,1], when: "Saturdays, or weeknights under work lights", note: "Leaf blowers, if used, are run by an adviser." },
+  { id: "pinestraw", c: "garden", name: "Pine Straw Soirée", desc: "Bales of pine straw or a mountain of mulch spread across your beds and tucked neatly around every shrub.", min: 3, max: 8, time: "60–90 min", equip: ["yours", "hand"], months: [3,4,5,9,10], when: "Weeknights Apr–Sep · Saturdays", note: "You provide the straw or mulch; we bring rakes and wheelbarrows." },
+  { id: "weeds", c: "garden", name: "Weed Whisperers", desc: "Flower beds hand-weeded, walkways edged, and the vines that have been plotting a takeover politely removed.", min: 2, max: 6, time: "60–75 min", equip: ["hand"], months: [4,5,6,7,8,9,10], when: "Weeknights Apr–Sep" },
+  { id: "pollen", c: "garden", name: "The Pollen Purge", desc: "When everything turns yellow: porches rinsed, outdoor furniture and screens wiped, and the drifts swept off steps and walkways.", min: 2, max: 6, time: "about 60 min", equip: ["hand", "yours"], months: [3,4,5], when: "Weeknights Apr–May · Saturdays", note: "We'll use your hose and outdoor spigot." },
+  { id: "storm", c: "garden", name: "Storm Cleanup Crew", desc: "After a summer storm or a hurricane's leftovers: limbs hauled, debris raked and branches stacked at the curb.", min: 4, max: 12, time: "75–90 min", equip: ["hand", "adult"], months: [6,7,8,9,10,11], when: "As needed, including Saturdays", note: "Any cutting is done by adults. No chainsaws for priests." },
+  { id: "pressure", c: "garden", name: "Power-Wash Promenade", desc: "Driveways, decks and siding made bright again. An adviser runs the pressure washer while priests move furniture, scrub and rinse.", min: 3, max: 6, time: "about 90 min", equip: ["adult", "yours"], months: [4,5,6,7,8,9,10], when: "Weeknights Apr–Sep · Saturdays" },
+  { id: "gutters", c: "garden", name: "Gutter Gourmet", desc: "Gutters and downspouts cleared. An adult works the ladder; the priests run the ground crew, bagging debris and flushing downspouts.", min: 3, max: 5, time: "about 60 min", equip: ["adult"], months: [11,12,1,3,4], when: "Saturdays · weeknights in April" },
+  { id: "gardenprep", c: "garden", name: "Garden-to-Table Prep", desc: "Soil turned, raised beds filled and a spring or fall garden planted. Bring the seeds; we'll bring the shovels.", min: 3, max: 8, time: "75–90 min", equip: ["hand", "yours"], months: [3,4,8,9], when: "Weeknights Apr & Aug–Sep · Saturdays", note: "Any drilling or sawing for new beds is done by an adult." },
+  { id: "firewood", c: "garden", name: "The Woodpile Waltz", desc: "A firewood delivery unloaded and stacked neatly, close enough to the door for cold nights.", min: 3, max: 8, time: "45–60 min", equip: ["hand"], months: [10,11,12,1,2], when: "Saturdays · weeknights in October" },
+  { id: "bins", c: "garden", name: "The Bin Bistro", desc: "Trash and recycling cans scrubbed and deodorized, plus a sweep of the corner where they live.", min: 2, max: 4, time: "30–45 min", equip: ["yours"], months: [4,5,6,7,8,9,10], when: "Weeknights Apr–Sep", side: true },
+  { id: "snow", c: "garden", name: "The Rare Carolina Snow Special", desc: "On the one day a year it actually ices over: walks shoveled, steps salted, and neighbors who shouldn't be out on the ice checked on.", min: 3, max: 10, time: "about 60 min", equip: ["hand", "yours"], months: [1,2], when: "Whenever it actually happens" },
+
+  // II. The Heavy Course
+  { id: "movein", c: "heavy", name: "Welcome-Wagon Unload", desc: "A moving truck emptied and every box carried to the room on its label, so new move-ins meet the ward on day one.", min: 4, max: 12, time: "60–90 min", equip: ["hand"], months: ALL, when: "Any activity night or Saturday", note: "We bring dollies and furniture pads." },
+  { id: "moveout", c: "heavy", name: "Farewell Load-Out", desc: "A truck or moving pod loaded Tetris-style, with blankets and straps. You rent and drive the truck; we bring the muscle.", min: 4, max: 12, time: "75–90 min", equip: ["hand", "yours"], months: ALL, when: "Any activity night or Saturday" },
+  { id: "garage", c: "heavy", name: "Garage Reset", desc: "A garage sorted, swept and organized, with a donation pile staged for pickup.", min: 3, max: 8, time: "about 90 min", equip: ["hand", "yours"], months: ALL, when: "Any activity night or Saturday", note: "Adults drive any haul-away runs." },
+  { id: "furniture", c: "heavy", name: "The Furniture Shuffle", desc: "Heavy pieces moved between rooms, upstairs or down, for a new layout, a new baby's room or new carpet.", min: 2, max: 6, time: "45–60 min", equip: ["hand"], months: ALL, when: "Any activity night" },
+  { id: "assembly", c: "heavy", name: "Some Assembly Required", desc: "Flat-pack furniture, bunk beds, grills and swing sets built from the instructions with no leftover screws. (Okay, maybe one.)", min: 2, max: 4, time: "60–90 min", equip: ["yours", "hand"], months: ALL, when: "Any activity night", note: "Power drills are run by an adult." },
+  { id: "donation", c: "heavy", name: "The Donation Drop", desc: "Furniture and boxes loaded for a donation center or dump run. An adult drives; priests load and unload.", min: 3, max: 6, time: "60–90 min", equip: ["adult", "hand"], months: ALL, when: "Any activity night or Saturday" },
+  { id: "attic", c: "heavy", name: "Attic & Storage-Unit Expedition", desc: "Stored items retrieved from or returned to an attic, crawlspace or storage unit, without anyone stepping between the joists.", min: 3, max: 6, time: "about 60 min", equip: ["hand", "adult"], months: ALL, when: "Any activity night", note: "An adult spots any pull-down attic ladder. Summer attics get very hot, so we keep those trips short." },
+
+  // III. Hearth & Home
+  { id: "deepclean", c: "hearth", name: "The Deep Clean", desc: "Kitchen, bathrooms and floors scrubbed top to bottom for a family welcoming a baby, recovering from surgery or just needing a break.", min: 3, max: 6, time: "about 90 min", equip: ["yours"], months: ALL, when: "Any activity night", note: "A member of the household or an adult leader is present the whole time." },
+  { id: "tall", c: "hearth", name: "A Tall Order", desc: "Everything that calls for a tall priest: ceiling fans dusted, light bulbs and smoke-detector batteries swapped, cobwebs evicted, top shelves reached.", min: 2, max: 4, time: "30–45 min", equip: ["yours"], months: ALL, when: "Any activity night", note: "Step stools only. Anything higher waits for an adult.", side: true },
+  { id: "windows", c: "hearth", name: "Crystal-Clear Windows", desc: "Ground-floor windows washed inside and out, screens hosed off and tracks vacuumed.", min: 3, max: 6, time: "about 75 min", equip: ["yours", "hand"], months: [3,4,5,9,10], when: "Weeknights Apr–May & Sep · Saturdays" },
+  { id: "detail", c: "hearth", name: "Full-Service Detail", desc: "A car washed, vacuumed and wiped down for a widow, a busy single parent or anyone who'd love a clean ride.", min: 2, max: 6, time: "45–60 min per car", equip: ["hand", "yours"], months: [4,5,6,7,8,9,10], when: "Weeknights Apr–Sep", note: "Several cars? We can run a detail line in the church parking lot." },
+  { id: "freezer", c: "hearth", name: "Kitchen Brigade Freezer Meals", desc: "Freezer meals cooked and labeled in the church kitchen for families who could use a few easy dinners, coordinated with the Relief Society.", min: 4, max: 10, time: "about 90 min", equip: ["ok"], months: ALL, when: "Any activity night" },
+  { id: "safety", c: "hearth", name: "Home Safety Tune-Up", desc: "HVAC filters changed, smoke and CO detectors tested, and fire-extinguisher dates checked. You supply the filters and batteries.", min: 2, max: 4, time: "30–45 min", equip: ["yours"], months: ALL, when: "Any activity night", side: true },
+  { id: "pantry", c: "hearth", name: "Pantry & Closet Makeover", desc: "A pantry, linen closet or toy room cleared, wiped and organized, with expired cans politely retired.", min: 2, max: 4, time: "about 60 min", equip: ["yours"], months: ALL, when: "Any activity night" },
+
+  // IV. Seasonal Specials
+  { id: "storagerun", c: "seasonal", name: "The Storage Run", desc: "Holiday bins brought down from the attic, garage rafters or a storage unit and set where you want them. Return trip included after the holidays.", min: 2, max: 6, time: "45–60 min", equip: ["hand", "adult"], months: [10,11,12,1], when: "Any activity night", note: "An adult handles ladders and rafters." },
+  { id: "lights", c: "seasonal", name: "Lights Up!", desc: "Christmas lights wrapped on bushes, trees, porch rails and walkways. An adult on the ladder hangs the rooflines while priests feed and test the strands.", min: 3, max: 8, time: "75–90 min", equip: ["yours", "adult"], months: [11,12], when: "Saturdays · weeknights with porch lights" },
+  { id: "tree", c: "seasonal", name: "Tree-Trimming Service", desc: "An artificial tree hauled out, assembled, fluffed and lit, with ornaments placed exactly where you point. Or a fresh tree carried in and set in its stand.", min: 2, max: 5, time: "about 60 min", equip: ["yours"], months: [11,12], when: "Any activity night" },
+  { id: "harvest", c: "seasonal", name: "Harvest Porch", desc: "Pumpkins, mums, hay bales and fall decorations hauled in and arranged so your porch says autumn.", min: 2, max: 5, time: "about 45 min", equip: ["yours"], months: [9,10,11], when: "Any activity night" },
+  { id: "undecorate", c: "seasonal", name: "The Grand Un-Decorating", desc: "Lights unwound, tree boxed, ornaments packed, and every bin labeled and back in storage before Valentine's Day.", min: 3, max: 8, time: "75–90 min", equip: ["hand", "adult"], months: [1,2], when: "Any activity night · Saturdays for rooflines" },
+  { id: "anyholiday", c: "seasonal", name: "Any Holiday, Any Box", desc: "Flags for the Fourth, spring wreaths, birthday banners: any seasonal swap, going up or coming down.", min: 2, max: 4, time: "30–45 min", equip: ["yours"], months: ALL, when: "Any activity night", side: true },
+
+  // V. The Little Ones' Table
+  { id: "parents", c: "nursery", name: "Parents' Night Out", desc: "Kids cared for at the meetinghouse with games, a story and snacks, so parents can grab dinner, run errands or simply sit somewhere quiet.", min: 4, max: 12, time: "about 90 min", equip: ["ok"], months: ALL, when: "Activity nights at the meetinghouse", note: "At least two adults present. Parents sign children in and out. Pairs well with a combined Young Women activity." },
+  { id: "temple", c: "nursery", name: "Temple Morning Sitters", desc: "Children watched at the meetinghouse so parents can attend the Raleigh temple together. Bedtime negotiations not included.", min: 4, max: 10, time: "3–4 hours", equip: ["ok"], months: ALL, when: "Saturdays, planned with the bishopric" },
+  { id: "eventcare", c: "nursery", name: "Ward Event Childcare", desc: "Kids entertained in a nearby room during a Relief Society activity, a ward training or an adult class.", min: 3, max: 8, time: "60–90 min", equip: ["ok"], months: ALL, when: "When the event is scheduled" },
+  { id: "helper", c: "nursery", name: "Mother's Helper", desc: "Kids kept busy in the yard or playroom while a parent stays home and finally gets something done (or takes a nap).", min: 2, max: 4, time: "60–75 min", equip: [], months: ALL, when: "Any activity night", note: "A parent stays home the entire time." },
+
+  // VI. Tech & Talents
+  { id: "tech", c: "talents", name: "Tech Concierge", desc: "Phones, tablets and smart TVs tamed: Gospel Library set up, photos backed up, and video calls with the grandkids figured out.", min: 2, max: 6, time: "about 60 min", equip: [], months: ALL, when: "Any activity night", note: "We help with apps and settings, never with banking or passwords." },
+  { id: "familysearch", c: "talents", name: "Family Tree Night", desc: "Members helped to add memories, attach sources and find family names ready for temple ordinances in the FamilySearch app.", min: 2, max: 8, time: "60–90 min", equip: [], months: ALL, when: "Any activity night · at the meetinghouse or in homes" },
+  { id: "scan", c: "talents", name: "Memory Lane Scanning", desc: "Old photos and documents scanned and uploaded to FamilySearch Memories, with the stories behind them recorded while we're there.", min: 2, max: 4, time: "about 75 min", equip: [], months: ALL, when: "Any activity night" },
+  { id: "bikes", c: "talents", name: "Bike Pit Crew", desc: "Tires aired, chains oiled, and brakes and seats adjusted on the family bikes, with an adviser checking every repair.", min: 2, max: 6, time: "about 60 min", equip: ["hand"], months: [3,4,5,6,7,8,9,10], when: "Weeknights Apr–Sep · or a ward-wide clinic in the parking lot" },
+  { id: "homework", c: "talents", name: "Homework Help Desk", desc: "Math facts, reading practice and science-fair projects for Primary-age kids at the meetinghouse, with parents nearby.", min: 3, max: 8, time: "about 60 min", equip: ["ok"], months: [1,2,3,4,5,8,9,10,11,12], when: "Activity nights during the school year" },
+
+  // VII. The Ministering Course
+  { id: "sacrament", c: "ministering", name: "The Sacrament, Brought Home", desc: "With the bishop's authorization, priests administer the sacrament to members confined to a home, care center or hospital.", min: 2, max: 3, time: "30–45 min", equip: ["ok"], months: ALL, when: "As the bishop assigns", note: "General Handbook 18.9.1. Requested through the bishop." },
+  { id: "porch", c: "ministering", name: "Porch Treats & Visits", desc: "Homemade treats and handwritten notes delivered to widows, widowers and homebound members, with a real visit if they'd like one.", min: 2, max: 10, time: "about 60 min", equip: [], months: ALL, when: "Any activity night" },
+  { id: "carecenter", c: "ministering", name: "Care Center Concert", desc: "Hymns, a few jokes and a round of checkers at a local senior living center, arranged with the activities director.", min: 4, max: 12, time: "60–75 min", equip: ["ok"], months: ALL, when: "Any activity night" },
+  { id: "missionmail", c: "ministering", name: "Mission Mail Night", desc: "Letters, emails and care packages for the ward's own full-time missionaries and the elders and sisters serving in our ward.", min: 2, max: 12, time: "45–60 min", equip: [], months: ALL, when: "Any activity night" },
+  { id: "welcome", c: "ministering", name: "The Welcome Basket", desc: "A treat basket, a ward contact card and a friendly hello for families who just moved into the ward.", min: 2, max: 4, time: "about 45 min", equip: [], months: ALL, when: "Any activity night", side: true },
+  { id: "carols", c: "ministering", name: "Doorstep Carols", desc: "Christmas carols and hymns sung on the porches of members who can't make it out, with cocoa for the singers afterward.", min: 4, max: 15, time: "75–90 min", equip: [], months: [12], when: "December activity nights" },
+  { id: "lifestory", c: "ministering", name: "Life Story Hour", desc: "An older member interviewed about their life and testimony, recorded and saved to FamilySearch Memories for the grandchildren.", min: 2, max: 4, time: "about 60 min", equip: [], months: ALL, when: "Any activity night" },
+
+  // VIII. The Community Table
+  { id: "building", c: "ward", name: "Meetinghouse Polish", desc: "Chapel pews dusted, hymnbooks straightened, the cultural hall dust-mopped and the grounds tidied, arranged with the building representative.", min: 4, max: 15, time: "60–90 min", equip: ["ok"], months: ALL, when: "Any activity night" },
+  { id: "partysetup", c: "ward", name: "Ward Party Setup & Takedown", desc: "Tables, chairs, decorations and cleanup for ward parties, the Christmas dinner or a funeral luncheon.", min: 4, max: 15, time: "60–90 min", equip: ["hand"], months: ALL, when: "Before or after the event" },
+  { id: "justserve", c: "ward", name: "The JustServe Special", desc: "A local project from JustServe.org in the Wake Forest area, chosen by the quorum and approved by the bishopric.", min: 4, max: 15, time: "75–90 min", equip: ["ok"], months: ALL, when: "Activity nights or Saturdays" },
+  { id: "pantryshift", c: "ward", name: "Food Pantry Shift", desc: "Donations sorted and packed at a local food pantry. Many pantries set a minimum volunteer age, so the committee checks first.", min: 6, max: 15, time: "about 90 min", equip: ["ok"], months: ALL, when: "Activity nights or Saturdays" },
+  { id: "neighbor", c: "ward", name: "The Good Neighbor", desc: "Any item on this menu, served to a neighbor of yours of any faith who could use a hand. Just tell us about them.", min: 2, max: 10, time: "varies", equip: [], months: ALL, when: "Any activity night or Saturday" }
+];
+
+const EQUIP = {
+  hand: { label: "Hand tools", long: "The quorum brings rakes, brooms, dollies and gloves." },
+  yours: { label: "Your supplies", long: "The household provides materials (mulch, cleaning supplies, filters, decorations)." },
+  adult: { label: "Adult-operated", long: "An adviser runs any ladder above a step stool or any power equipment; priests work the ground." },
+  ok: { label: "Leader-coordinated", long: "Needs bishopric or ward-leader coordination (building, childcare, outside organizations)." }
+};
+
+// What's in season, by month, in Wake Forest
+const MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+
+
+</script>
+<script>
+// ---- Committee contact: fill these in to show them on the guest check ----
+const COMMITTEE = { who: "the Priests Quorum Service Committee", phone: "", email: "" };
+// ---- Google Form for requests (prefilled link). entries map field -> "entry.NNN" ----
+const FORM = { base: "https://docs.google.com/forms/d/e/1FAIpQLSfHJUda0tFFFNh80MkbhUt_AN4fC44KzNbU_I5v3NJHzzQLsw/viewform", entries: { name: "entry.1704578950", contact: "entry.1031761935", addr: "entry.487695771", dishes: "entry.243923424", nights: "entry.1992010988", details: "entry.585364314", supplies: "entry.1121564224", home: "entry.1368980511" } };
+
+const MONTH_PICKS = {
+  1:["undecorate","storagerun","firewood","snow"], 2:["tech","familysearch","deepclean"], 3:["pollen","gardenprep","pinestraw"],
+  4:["pinestraw","weeds","pressure","windows"], 5:["pollen","detail","movein"], 6:["movein","storm","bikes"],
+  7:["moveout","storm","detail"], 8:["gardenprep","homework","movein"], 9:["pinestraw","harvest","windows"],
+  10:["harvest","firewood","storagerun"], 11:["leaf","lights","tree"], 12:["carols","lights","parents"]
+};
+const byId = Object.fromEntries(ITEMS.map(i => [i.id, i]));
+const today = new Date();
+const NOW_M = today.getMonth() + 1;
+const state = { crew: 0, season: "all", month: 0, equip: "any", ticket: [] };
+const store = { get(k){ try { return JSON.parse(localStorage.getItem(k)); } catch(e){ return null; } }, set(k,v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} } };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const crewText = i => i.max >= 15 ? `${i.min}+ priests` : `${i.min}–${i.max} priests`;
+
+// Months
+const mEl = document.getElementById("months");
+mEl.innerHTML = MONTH_NAMES.map((n, k) => {
+  const m = k + 1, picks = MONTH_PICKS[m].map(id => byId[id].name).join(" · ");
+  return `<button class="month${m === NOW_M ? " now" : ""}" data-month="${m}" aria-pressed="false"><span class="m">${n.slice(0,3)}<i>${m === NOW_M ? "Now" : ""}</i></span><span class="picks">${esc(picks)}</span></button>`;
+}).join("");
+document.getElementById("now-chip").textContent = `In season now (${MONTH_NAMES[NOW_M-1]})`;
+
+// Legend
+document.getElementById("legend").innerHTML = Object.entries(EQUIP).map(([k, e]) => `<div><span class="tag ${k}">${e.label}</span>${esc(e.long)}</div>`).join("");
+
+// Course nav
+document.getElementById("course-nav").innerHTML = COURSES.map(c => `<a href="#c-${c.id}">${c.num}. ${esc(c.name)}</a>`).join("");
+
+// Menu
+const menu = document.getElementById("menu");
+menu.innerHTML = COURSES.map(c => {
+  const dishes = ITEMS.filter(i => i.c === c.id).map(i => `
+    <article class="dish" data-id="${i.id}">
+      <div class="dish-top"><h3>${esc(i.name)}${i.side ? '<span class="side">Side</span>' : ""}</h3><span class="leader" aria-hidden="true"></span><span class="crew">${crewText(i)}</span></div>
+      <p>${esc(i.desc)}</p>
+      <div class="meta">${esc(i.time)} · ${esc(i.when)}</div>
+      ${i.note ? `<div class="note">${esc(i.note)}</div>` : ""}
+      <div class="dish-foot">${i.equip.map(e => `<span class="tag ${e}">${EQUIP[e].label}</span>`).join("")}<button class="add" type="button" data-add="${i.id}" aria-pressed="false">Add to ticket</button></div>
+    </article>`).join("");
+  return `<section class="course" id="c-${c.id}" aria-labelledby="h-${c.id}">
+    <div class="course-head"><span class="num">${c.num}</span><h2 id="h-${c.id}">${esc(c.name)}</h2><span class="sub">${esc(c.sub)}</span><p>${esc(c.blurb)}</p></div>
+    <div class="dishes">${dishes}<p class="empty-course" hidden>Nothing from this course fits those filters. Try another month or crew size.</p></div>
+  </section>`;
+}).join("");
+
+function applyFilters(){
+  const month = state.month || (state.season === "now" ? NOW_M : 0);
+  let shown = 0;
+  document.querySelectorAll(".course").forEach(sec => {
+    let n = 0;
+    sec.querySelectorAll(".dish").forEach(d => {
+      const i = byId[d.dataset.id];
+      let ok = true;
+      if (state.crew === 3) ok = i.min <= 4;
+      if (state.crew === 6) ok = i.min <= 8 && i.max >= 5;
+      if (state.crew === 9) ok = i.max >= 9;
+      if (month && !i.months.includes(month)) ok = false;
+      if (state.equip === "noadult" && i.equip.includes("adult")) ok = false;
+      d.hidden = !ok; if (ok) n++;
+    });
+    sec.querySelector(".empty-course").hidden = n > 0;
+    shown += n;
+  });
+  const bits = [];
+  if (state.crew) bits.push({3:"a crew of 2–4",6:"a crew of 5–8",9:"a crew of 9 or more"}[state.crew]);
+  if (month) bits.push(MONTH_NAMES[month-1]);
+  if (state.equip === "noadult") bits.push("no adult-run equipment");
+  document.getElementById("result-note").textContent = bits.length ? `${shown} of ${ITEMS.length} dishes fit ${bits.join(", ")}.` : `${ITEMS.length} dishes across ${COURSES.length} courses.`;
+  document.querySelectorAll(".month").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.month === state.month)));
+}
+
+function setPressed(group, attr, val){ document.querySelectorAll(`[data-${attr}]`).forEach(b => b.setAttribute("aria-pressed", String(b.dataset[attr] === String(val)))); }
+document.querySelectorAll("[data-crew]").forEach(b => b.addEventListener("click", () => { state.crew = +b.dataset.crew; setPressed(null, "crew", state.crew); applyFilters(); }));
+document.querySelectorAll("[data-season]").forEach(b => b.addEventListener("click", () => { state.season = b.dataset.season; state.month = 0; setPressed(null, "season", state.season); applyFilters(); }));
+document.querySelectorAll("[data-equip]").forEach(b => b.addEventListener("click", () => { state.equip = b.dataset.equip; setPressed(null, "equip", state.equip); applyFilters(); }));
+mEl.addEventListener("click", e => {
+  const b = e.target.closest(".month"); if (!b) return;
+  const m = +b.dataset.month;
+  state.month = state.month === m ? 0 : m; state.season = "all";
+  setPressed(null, "season", "all"); applyFilters();
+  if (state.month) document.getElementById("c-" + COURSES[0].id).scrollIntoView({ block: "start" });
+});
+
+// Ticket
+const draft = store.get("ptable-draft") || {};
+state.ticket = (draft.ticket || []).filter(id => byId[id]);
+function renderTicket(){
+  document.querySelectorAll("[data-add]").forEach(b => { const on = state.ticket.includes(b.dataset.add); b.setAttribute("aria-pressed", String(on)); b.textContent = on ? "✓ On your ticket" : "Add to ticket"; });
+  const ul = document.getElementById("check-items");
+  ul.innerHTML = state.ticket.length ? state.ticket.map(id => { const i = byId[id]; return `<li><span>${esc(i.name)}</span><span class="q">${crewText(i)} · ${esc(i.time)}</span><button type="button" data-remove="${id}" aria-label="Remove ${esc(i.name)}">✕</button></li>`; }).join("")
+    : `<li class="check-empty">No dishes yet. Tap “Add to ticket” on anything in the menu above, or just describe what you need below.</li>`;
+  const tray = document.getElementById("tray");
+  tray.classList.toggle("on", state.ticket.length > 0);
+  document.getElementById("tray-text").textContent = `Your ticket: ${state.ticket.length} ${state.ticket.length === 1 ? "dish" : "dishes"}`;
+  saveDraft();
+}
+menu.addEventListener("click", e => {
+  const b = e.target.closest("[data-add]"); if (!b) return;
+  const id = b.dataset.add, k = state.ticket.indexOf(id);
+  if (k >= 0) state.ticket.splice(k, 1); else state.ticket.push(id);
+  renderTicket();
+});
+document.getElementById("check-items").addEventListener("click", e => {
+  const b = e.target.closest("[data-remove]"); if (!b) return;
+  state.ticket = state.ticket.filter(x => x !== b.dataset.remove); renderTicket();
+});
+
+// Activity nights: Tuesdays through 2026, Wednesdays from 2027
+function nextNights(n){
+  const out = [], d = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
+  while (out.length < n) {
+    const wd = d.getFullYear() <= 2026 ? 2 : 3;
+    if (d.getDay() === wd) out.push(new Date(d));
+    d.setDate(d.getDate() + 1);
+  }
+  return out;
+}
+const fmt = d => d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+const nights = nextNights(8).map(fmt).concat(["A Saturday", "Another evening", "Flexible"]);
+document.getElementById("dates").innerHTML = nights.map((t, k) => `<label for="d-${k}"><input type="checkbox" id="d-${k}" value="${esc(t)}">${esc(t)}</label>`).join("");
+
+const form = document.getElementById("check");
+const fieldIds = ["f-name","f-contact","f-addr","f-details","f-supplies"];
+fieldIds.forEach(id => { if (draft[id]) document.getElementById(id).value = draft[id]; });
+let saveT;
+function saveDraft(){ clearTimeout(saveT); saveT = setTimeout(() => { const d = { ticket: state.ticket }; fieldIds.forEach(id => d[id] = document.getElementById(id).value); store.set("ptable-draft", d); }, 300); }
+form.addEventListener("input", saveDraft);
+
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  const st = document.getElementById("status");
+  const v = id => document.getElementById(id).value.trim();
+  if (!v("f-name")) { st.textContent = "Add your name so we know who to call."; st.className = "status err"; document.getElementById("f-name").focus(); return; }
+  if (!state.ticket.length && !v("f-details")) { st.textContent = "Add a dish from the menu or describe the job."; st.className = "status err"; document.getElementById("f-details").focus(); return; }
+  const picked = [...document.querySelectorAll("#dates input:checked")].map(x => x.value);
+  const home = form.querySelector("input[name=home]:checked").value;
+  const no = "PT-" + today.toISOString().slice(2,10).replace(/-/g,"") + "-" + Math.random().toString(36).slice(2,5).toUpperCase();
+  const lines = [
+    "THE PRIESTS' TABLE · SERVICE REQUEST",
+    "Ticket: " + no,
+    "Name: " + v("f-name"),
+    "Contact: " + (v("f-contact") || "—"),
+    "Address: " + (v("f-addr") || "—"),
+    "Requested: " + (state.ticket.length ? state.ticket.map(id => byId[id].name).join("; ") : "See details"),
+    "Preferred nights: " + (picked.length ? picked.join("; ") : "Flexible"),
+    "Supplies on hand: " + (v("f-supplies") || "—"),
+    "Adult home: " + home,
+    "Details: " + (v("f-details") || "—"),
+    "Submitted: " + today.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+  ];
+  document.getElementById("ticket").value = lines.join("\n");
+  document.getElementById("check-no").textContent = "Guest Check · " + no;
+  document.getElementById("ticket-out").hidden = false;
+  const hasForm = !!FORM.base;
+  document.getElementById("send-box").hidden = !hasForm;
+  document.getElementById("alt").open = !hasForm;
+  if (hasForm) {
+    const vals = {
+      name: v("f-name"), contact: v("f-contact"), addr: v("f-addr"),
+      dishes: state.ticket.map(id => byId[id].name).join("; "),
+      nights: picked.join("; ") || "Flexible",
+      details: v("f-details") + (v("f-details") ? "\n" : "") + "(Ticket " + no + ")",
+      supplies: v("f-supplies"), home: home
+    };
+    const q = new URLSearchParams({ usp: "pp_url" });
+    for (const [k, entry] of Object.entries(FORM.entries)) if (entry && vals[k]) q.append(entry, vals[k]);
+    document.getElementById("form-link").href = FORM.base + "?" + q.toString();
+  }
+  st.textContent = hasForm ? "Ticket ready. One more tap below." : "Ticket ready. Copy it below."; st.className = "status";
+  document.getElementById("ticket-out").scrollIntoView({ block: "center" });
+});
+
+document.getElementById("copy").addEventListener("click", () => {
+  const ta = document.getElementById("ticket"), cs = document.getElementById("copy-status");
+  const fallback = () => { ta.focus(); ta.select(); cs.textContent = "Selected. Press Copy on your device."; };
+  try {
+    navigator.clipboard.writeText(ta.value).then(() => { cs.textContent = "Copied. Paste it into a text or email."; }, fallback);
+  } catch (e) { fallback(); }
+});
+document.getElementById("clear").addEventListener("click", () => {
+  state.ticket = []; fieldIds.forEach(id => document.getElementById(id).value = "");
+  document.querySelectorAll("#dates input").forEach(x => x.checked = false);
+  document.getElementById("ticket-out").hidden = true; document.getElementById("status").textContent = "";
+  document.getElementById("check-no").textContent = "Guest Check";
+  renderTicket();
+});
+
+// Where to send it
+(function(){
+  const s = document.getElementById("send-to"), bits = [];
+  if (COMMITTEE.phone) bits.push(`<div>Text: <span class="contact-line">${esc(COMMITTEE.phone)}</span></div>`);
+  if (COMMITTEE.email) bits.push(`<div>Email: <span class="contact-line">${esc(COMMITTEE.email)}</span></div>`);
+  s.innerHTML = `<b>Send your ticket to ${esc(COMMITTEE.who)}.</b>` + (bits.length ? bits.join("") : `<div>Text or email it to the quorum adviser, or hand it to any priest at church. We'll take it from there.</div>`);
+})();
+
+renderTicket();
+applyFilters();
+</script>
+
+</body>
+</html>
